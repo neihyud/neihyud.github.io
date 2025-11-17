@@ -46,10 +46,17 @@
       /* ===== CSS DÀNH RIÊNG CHO VIỆC IN ===== */
       /* ============================================= */
       @media print {
+        /* ===== FIX FONT BỊ MÉO KHI IN (Đảm bảo các thẻ khác cũng tuân theo) ===== */
+        * {
+          font-family: Arial, Helvetica, sans-serif !important;
+        }
+
         body {
           background-color: #ffffff;
           padding: 0 !important;
           margin: 0 !important;
+          /* ===== FIX FONT BỊ MÉO KHI IN ===== */
+          font-family: Arial, Helvetica, sans-serif !important;
         }
 
         body > *:not(#resume-container) {
@@ -111,12 +118,12 @@
           id="resume-header"
           class="flex flex-col md:flex-row items-center gap-8 md:gap-10 mb-6"
         >
-          <div class="w-[120px] h-36 bg-gray-200 rounded-md flex-shrink-0">
+          <div class="w-32 h-32 bg-gray-200 rounded-full flex-shrink-0">
             <img
               id="resume-avatar"
-              src="./20020400.jpg"
+              src="./congratulations.jpeg"
               alt="Ảnh đại diện"
-              class="w-full h-full rounded-md object-cover object-top"
+              class="w-full h-full rounded-full object-cover object-[25%_40%]"
               onerror="this.src='https://placehold.co/160x160/e2e8f0/64748b'"
             />
           </div>
@@ -189,7 +196,7 @@
       const resumeData = {
         personalInfo: {
           name: "Nguyễn Duy Hiến",
-          avatar: "./20020400.jpg",
+          avatar: "./congratulations.jpeg",
           address: "Cầu Giấy, Hà Nội",
           phone: "0347354185",
           email: "shinestarbn1@gmail.com",
@@ -211,23 +218,25 @@
                 participation: [
                   "Xây dựng hệ thống phân quyền ABAC toàn diện với phân cấp vai trò, quyền chi tiết theo thuộc tính, tăng tính bảo mật và kiểm soát truy cập.",
                   "Phát triển module đồng bộ TikTok Shop (đơn hàng, fulfillment, thống kê, báo cáo, đối soát), giúp giảm lỗi đồng bộ và tăng tốc độ xử lý.",
-                  "Xây dựng API thao tác hàng loạt và tích hợp Byte-COMS, cải thiện hiệu quả quản lý sản phẩm & đơn hàng.",
+                  "Xây dựng API thao tác hàng loạt, cải thiện hiệu quả quản lý sản phẩm và đơn hàng.",
                   "Xây dựng module chi phí – tài chính, xử lý giao dịch, ghi log, thống kê và gửi thông báo qua Discord.",
                   "Sử dụng RabbitMQ cho email, xuất báo cáo và đồng bộ dữ liệu.",
-                ],
-              },
-              {
-                name: "Dự án: Byte-COMS (Hệ thống quản lý đơn hàng)",
-                description: "Nền tảng quản lý đơn hàng xuyên biên giới.",
-                technologies:
-                  "NestJS, Elasticsearch, Redis, MongoDB, BullMQ, RabbitMQ, ReactJS",
-                participation: [
                   "Xây dựng OCR server nhận dạng thông tin từ nhãn PDF, rút ngắn thời gian xử lý thủ công",
-                  "Phát triển quy trình theo dõi vận chuyển và quy trình quét (kiểm tra, duyệt, thanh toán).",
-                  "Xử lý tính phí, thanh toán và hoàn tiền cho các đơn hàng logistics.",
                   "Triển khai hệ thống giám sát người dùng bằng Elasticsearch (hoạt động, IP, vị trí…).",
                 ],
               },
+              // {
+              //   name: "Dự án: Byte-COMS (Hệ thống quản lý đơn hàng)",
+              //   description: "Nền tảng quản lý đơn hàng xuyên biên giới.",
+              //   technologies:
+              //     "NestJS, Elasticsearch, Redis, MongoDB, BullMQ, RabbitMQ, ReactJS",
+              //   participation: [
+              //     "Xây dựng OCR server nhận dạng thông tin từ nhãn PDF, rút ngắn thời gian xử lý thủ công",
+              //     "Phát triển quy trình theo dõi vận chuyển và quy trình quét (kiểm tra, duyệt, thanh toán).",
+              //     "Xử lý tính phí, thanh toán và hoàn tiền cho các đơn hàng logistics.",
+              //     "Triển khai hệ thống giám sát người dùng bằng Elasticsearch (hoạt động, IP, vị trí…).",
+              //   ],
+              // },
               {
                 name: "Dự án: Hecci",
                 description: "Nền tảng chuyển đổi số quy trình nội bộ.",
