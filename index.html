@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Template CV</title>
+    <title>CV - Nguyễn Duy Hiến</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -14,96 +14,97 @@
     <style>
       body {
         font-family: "Inter", sans-serif;
-        background-color: #f8fafc; /* Màu nền xám nhạt */
+        background-color: #f8fafc;
+        color: #334155;
       }
-      /* Định nghĩa màu xanh dương chủ đạo */
+      /* --- MÀU SẮC CHỦ ĐẠO --- */
       .text-main-blue {
-        color: #2563eb; /* Tương đương text-blue-600 */
+        color: #2563eb;
       }
       .border-main-blue {
         border-color: #2563eb;
       }
-      /* Tùy chỉnh cho danh sách có dấu đầu dòng */
+      .bg-main-blue-light {
+        background-color: #eff6ff; /* blue-50 */
+      }
+
+      /* --- CUSTOM LIST --- */
       ul.list-custom {
         list-style-type: none;
-        padding-left: 1.5rem; /* Tương đương pl-6 */
+        padding-left: 0;
       }
       ul.list-custom li {
         position: relative;
-        padding-left: 1.25rem; /* Tương đương pl-5 */
-        margin-bottom: 0.25rem; /* Tương đương mb-1 */
+        padding-left: 1.25rem;
+        margin-bottom: 0.35rem;
+        line-height: 1.5;
       }
       ul.list-custom li::before {
         content: "•";
         position: absolute;
         left: 0;
-        color: #2563eb; /* THAY ĐỔI: Chuyển sang màu xanh chủ đạo */
-        font-size: 1.25rem; /* Phóng to dấu chấm */
-        line-height: 1.5rem; /* Căn chỉnh dấu chấm */
+        color: #2563eb;
+        font-size: 1.25rem;
+        line-height: 1.5rem;
+        top: -2px;
       }
 
-      /* ============================================= */
-      /* ===== CSS DÀNH RIÊNG CHO VIỆC IN ===== */
-      /* ============================================= */
+      /* --- PROJECT STYLES --- */
+      .project-label {
+        font-weight: 600;
+        color: #1e293b; /* slate-800 */
+        /* display: inline-block; */
+        /* flex-shrink: 0; */
+      }
+      .project-row {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 0.5rem;
+      }
+
+      /* --- PRINT STYLES --- */
       @media print {
-        /* ===== FIX FONT BỊ MÉO KHI IN (Đảm bảo các thẻ khác cũng tuân theo) ===== */
+        @page {
+          margin: 0.5cm;
+          size: A4;
+        }
         * {
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
           font-family: Arial, Helvetica, sans-serif !important;
         }
-
         body {
-          background-color: #ffffff;
+          background-color: white;
           padding: 0 !important;
-          margin: 0 !important;
-          /* ===== FIX FONT BỊ MÉO KHI IN ===== */
-          font-family: Arial, Helvetica, sans-serif !important;
         }
-
-        body > *:not(#resume-container) {
-          display: none;
-        }
-
         #resume-container {
           box-shadow: none !important;
-          margin: 0 !important;
           max-width: 100% !important;
           width: 100% !important;
-          border-radius: 0 !important;
-          overflow: visible !important;
-          padding: 0 !important;
         }
-
-        #resume-container .wrapper-content {
-          padding: 0 !important;
+        .wrapper-content {
+          padding: 1rem !important;
         }
-
-        h2 {
+        h2,
+        .job-header {
           page-break-after: avoid !important;
         }
-
-        /* ===== THAY ĐỔI 1: FIX NGẮT TRANG ===== */
-        /* Bỏ .work-item, chỉ giữ lại quy tắc cho .project-item và .education-item */
         .project-item,
-        .education-item {
-          page-break-inside: avoid !important; /* Không ngắt MỘT dự án/học vấn */
+        li {
+          page-break-inside: avoid !important;
         }
-        /* Thêm quy tắc cho tiêu đề công việc: không để tiêu đề mồ côi */
+        /* #resume-avatar { display: none; } */
+
         .job-header {
           page-break-after: avoid !important;
         }
 
-        /* Fix Header khi in */
         #resume-header {
           flex-direction: row !important;
         }
 
         #contact-info-grid > div {
           justify-content: start !important;
-        }
-
-        /* ===== THAY ĐỔI 2: FIX KHOẢNG TRẮNG THỪA ===== */
-        .section-print-margin {
-          margin-bottom: 1.5rem !important; /* Giảm mb-6 (2.5rem) xuống mb-6 (1.5rem) khi in */
         }
       }
     </style>
@@ -116,73 +117,83 @@
       <div id="resume-content-wrapper" class="wrapper-content p-8 md:p-12">
         <header
           id="resume-header"
-          class="flex flex-col md:flex-row items-center gap-8 md:gap-10 mb-6"
+          class="flex flex-row items-center gap-6 md:gap-10 mb-6"
         >
-          <div class="w-32 h-32 bg-gray-200 rounded-full flex-shrink-0">
+          <!-- <div
+            class="w-32 h-32 bg-gray-200 flex-shrink-0 border-2 border-white shadow-sm overflow-hidden"
+          >
             <img
               id="resume-avatar"
               src="./congratulations.jpeg"
-              alt="Ảnh đại diện"
-              class="w-full h-full rounded-full object-cover object-[25%_40%]"
-              onerror="this.src='https://placehold.co/160x160/e2e8f0/64748b'"
+              alt="Avatar"
+              class="w-full h-full object-cover"
+              onerror="this.src='https://placehold.co/160x160/e2e8f0/64748b?text=Avatar'"
+            />
+          </div> -->
+
+          <div
+            class="w-32 h-32 bg-gray-200 border-2 border-white shadow-sm overflow-hidden"
+          >
+            <img
+              id="resume-avatar"
+              src="./congratulations.jpeg"
+              alt="Avatar"
+              class="w-full h-full object-cover object-top"
+              onerror="this.src='https://placehold.co/160x160/e2e8f0/64748b?text=Avatar'"
             />
           </div>
 
-          <div class="w-full text-center md:text-left">
+          <div class="w-full md:text-left">
             <h1
               id="resume-name"
-              class="text-4xl md:text-4xl font-bold text-gray-800 mb-2 text-left"
+              class="text-3xl md:text-4xl font-bold text-gray-900 mb-2 uppercase tracking-wide"
             >
               Đang tải...
             </h1>
             <div
               id="contact-info-grid"
-              class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-gray-700 mt-4 w-3/4"
+              class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2 text-gray-600 mt-3 w-3/5"
             ></div>
           </div>
         </header>
 
-        <!-- <hr class="mb-2" /> -->
-
         <main>
-          <section class="mb-6 section-print-margin">
+          <section class="mb-6">
             <h2
-              class="text-xl font-bold text-main-blue tracking-wider uppercase mb-4 border-b-2 border-main-blue pb-1"
+              class="text-lg font-bold text-main-blue uppercase border-b-2 border-main-blue pb-1 mb-3"
             >
-              TÓM TẮT
+              SUMMARY
             </h2>
-            <p id="summary-content" class="text-gray-700 leading-relaxed">
-              Đang tải...
-            </p>
+            <p id="summary-content" class="text-gray-700">Đang tải...</p>
           </section>
 
-          <section class="mb-6 section-print-margin">
+          <section class="mb-6">
             <h2
-              class="text-xl font-bold text-main-blue tracking-wider uppercase mb-4 border-b-2 border-main-blue pb-1"
+              class="text-lg font-bold text-main-blue uppercase border-b-2 border-main-blue pb-1 mb-4"
             >
-              KINH NGHIỆM LÀM VIỆC
+              WORK EXPERIENCE
             </h2>
             <div id="work-experience-container"></div>
           </section>
 
-          <section class="mb-6 section-print-margin">
+          <section class="mb-6">
             <h2
-              class="text-xl font-bold text-main-blue tracking-wider uppercase mb-4 border-b-2 border-main-blue pb-1"
+              class="text-lg font-bold text-main-blue uppercase border-b-2 border-main-blue pb-1 mb-3"
             >
-              HỌC VẤN
+              EDUCATION
             </h2>
             <div id="education-container"></div>
           </section>
 
-          <section class="mb-6 section-print-margin">
+          <section class="mb-2">
             <h2
-              class="text-xl font-bold text-main-blue tracking-wider uppercase mb-4 border-b-2 border-main-blue pb-1"
+              class="text-lg font-bold text-main-blue uppercase border-b-2 border-main-blue pb-1 mb-3"
             >
-              THÔNG TIN THÊM
+              ADDITIONAL INFORMATION
             </h2>
             <ul
               id="additional-info-container"
-              class="list-custom text-gray-700 space-y-2"
+              class="list-custom text-gray-700"
             ></ul>
           </section>
         </main>
@@ -191,94 +202,75 @@
 
     <script>
       // ------------------------------------------------------------------
-      // ----- DỮ LIỆU (KHÔNG THAY ĐỔI) -----
+      // 1. DỮ LIỆU RESUME (Đã cập nhật nội dung mới)
       // ------------------------------------------------------------------
       const resumeData = {
         personalInfo: {
-          name: "Nguyễn Duy Hiến",
-          avatar: "./congratulations.jpeg",
-          address: "Cầu Giấy, Hà Nội",
+          name: "Nguyen Duy Hien",
+          avatar: "./20020400.jpg",
+          address: "Cau Giay, Hanoi",
           phone: "0347354185",
           email: "shinestarbn1@gmail.com",
           dob: "21/02/2002",
         },
-        summary: `Fullstack Developer với hơn 2 năm kinh nghiệm, phát triển các hệ thống ERP, E-commerce và POS. Kinh nghiệm tối ưu hiệu năng, xử lý dữ liệu lớn và tích hợp đa nền tảng.`,
+        summary: `Fullstack Developer with over 2 years of experience building ERP and E-commerce systems. Experienced in integrating external platforms (Pancake, TikTok Shop, Shopify), real-time data processing, and system performance optimization.`,
         workExperience: [
           {
-            jobTitle: "Full stack developer",
+            jobTitle: "Full Stack Developer",
             company: "Varmeta",
-            date: "02/2024 - Hiện tại",
+            date: "02/2024 - Present",
             projects: [
               {
-                name: "Dự án: Byte-ERP",
-                description:
-                  "Hệ thống ERP quản lý kho, đơn hàng, tài chính, nhân sự.",
-                technologies:
-                  "NestJS, Elasticsearch, Redis, MongoDB, BullMQ, RabbitMQ, ReactJS.",
+                name: "Hecci",
+                description: "Internal Digital Transformation Platform.",
+                technologies: "NestJS, ReactJS, MongoDB, Redis, BullMQ.",
                 participation: [
-                  "Xây dựng hệ thống phân quyền ABAC toàn diện với phân cấp vai trò, quyền chi tiết theo thuộc tính, tăng tính bảo mật và kiểm soát truy cập.",
-                  "Phát triển module đồng bộ TikTok Shop (đơn hàng, fulfillment, thống kê, báo cáo, đối soát), giúp giảm lỗi đồng bộ và tăng tốc độ xử lý.",
-                  "Xây dựng API thao tác hàng loạt, cải thiện hiệu quả quản lý sản phẩm và đơn hàng.",
-                  "Xây dựng module chi phí – tài chính, xử lý giao dịch, ghi log, thống kê và gửi thông báo qua Discord.",
-                  "Sử dụng RabbitMQ cho email, xuất báo cáo và đồng bộ dữ liệu.",
-                  "Xây dựng OCR server nhận dạng thông tin từ nhãn PDF, rút ngắn thời gian xử lý thủ công",
-                  "Triển khai hệ thống giám sát người dùng bằng Elasticsearch (hoạt động, IP, vị trí…).",
-                ],
-              },
-              // {
-              //   name: "Dự án: Byte-COMS (Hệ thống quản lý đơn hàng)",
-              //   description: "Nền tảng quản lý đơn hàng xuyên biên giới.",
-              //   technologies:
-              //     "NestJS, Elasticsearch, Redis, MongoDB, BullMQ, RabbitMQ, ReactJS",
-              //   participation: [
-              //     "Xây dựng OCR server nhận dạng thông tin từ nhãn PDF, rút ngắn thời gian xử lý thủ công",
-              //     "Phát triển quy trình theo dõi vận chuyển và quy trình quét (kiểm tra, duyệt, thanh toán).",
-              //     "Xử lý tính phí, thanh toán và hoàn tiền cho các đơn hàng logistics.",
-              //     "Triển khai hệ thống giám sát người dùng bằng Elasticsearch (hoạt động, IP, vị trí…).",
-              //   ],
-              // },
-              {
-                name: "Dự án: Hecci",
-                description: "Nền tảng chuyển đổi số quy trình nội bộ.",
-                technologies:
-                  "NestJS, Redis, MongoDB, BullMQ, RabbitMQ, ReactJS.",
-                participation: [
-                  "Tích hợp Zalo OA và Firebase để gửi tin nhắn, thông báo.",
-                  "Xử lý dữ liệu sản phẩm từ Pancake.",
-                  "Xây dựng logic phân quyền và tác vụ nền với BullMQ.",
-                  "Tạo webhook realtime đồng bộ dữ liệu từ nền tảng bên ngoài.",
+                  "**Notification:** Integrated Zalo OA (production orders), Firebase (workflow handoff/coordination), and Discord (finance/HR reports) to streamline multi-stakeholder operations.",
+                  "**Data Synchronization:** Engineered a real-time Webhook flow from Pancake, leveraging BullMQ to synchronize orders to the internal system, ensuring immediate consistency of sales data.",
                 ],
               },
               {
-                name: "Dự án: E-learning",
+                name: "ERP Bytesel",
                 description:
-                  "Nền tảng cho phép học viện tạo, quản lý, bán khóa học dưới dạng vé. Người dùng có thể duyệt và mua vé trực tuyến",
+                  "Comprehensive ERP system for inventory, order, finance, and HR management.",
                 technologies:
-                  "ReactJS, NestJS, Prisma, Jest, Postgresql, Redis, Docker, Kafka.",
+                  "ReactJS, NestJS, MongoDB, Redis, Elasticsearch, BullMQ, RabbitMQ.",
                 participation: [
-                  "Tích hợp WebSocket để gửi thông báo thời gian thực.",
-                  "Sử dụng Redis để xây dựng hàng đợi ảo (virtual queue) cho thanh toán vé, giảm tải cơ sở dữ liệu và nâng cao trải nghiệm người dùng.",
-                  "Tối ưu API xem chi tiết khóa học bằng caching và Redis distributed lock, giảm đáng kể thời gian phản hồi và cho phép xử lý nhiều yêu cầu đồng thời.",
-                  "Tạo Event-driven và Scheduled workers cho tính năng đếm lượt xem khóa học, cải thiện thời gian phản hồi API và giảm truy xuất cơ sở dữ liệu.",
+                  "**Architecture & Security:** Engineered a comprehensive Attribute-Based Access Control (ABAC) system with granular permissions and hierarchical roles to ensure robust data security.",
+                  "**TikTok Shop Integration:** Managed order lifecycles (fulfillment, consolidation, cancellation, reconciliation, reporting) and developed Bulk Operations APIs to streamline high-volume product management.",
+                  "**Logistics & Automation:** Designed complex workflows for shipping tracking and scan verification, including separate mechanisms for approval and payment processing.",
+                  "**Financial Management:** Developed modules for internal expense control (create/approve/report) and automated payment/refund processing for logistics orders.",
+                  "**Performance & Monitoring:** Leveraged RabbitMQ for high-volume asynchronous tasks (emails, reporting) and Elasticsearch for real-time user activity logging and session tracking.",
+                ],
+              },
+              {
+                name: "Learning Ticket System",
+                description:
+                  "Platform enabling academies to create, manage, and sell courses as online tickets.",
+                technologies:
+                  "NextJS, NestJS, Prisma, Jest, PostgreSQL, Redis, Docker.",
+                participation: [
+                  "**Real-time:** Integrated WebSockets to deliver real-time notifications to users.",
+                  "**High Concurrency:** Implemented a virtual waiting queue using Redis for ticket checkout to significantly reduce database load.",
+                  "**Performance Optimization:** Implemented API Caching and Redis distributed locks to reduce latency under high concurrency.",
+                  "**Event Driven:** Deployed scheduled workers for course view counting to improve overall system performance and reduce database I/O.",
                 ],
               },
             ],
           },
           {
-            jobTitle: "Full stack developer",
+            jobTitle: "Javascript Developer",
             company: "Magestore",
             date: "05/2023 - 02/2024",
             projects: [
               {
-                name: "Dự án: Magestore Pos Shopify",
+                name: "Magestore POS Shopify",
                 description:
-                  "Giải pháp POS giúp mở rộng cửa hàng vật lý bằng cách duy trì đồng bộ hóa hàng tồn kho theo thời gian thực với Shopify, hỗ trợ thanh toán, in hóa đơn.",
-                technologies: "ReactJS, NodeJS, Postgresql, Redis",
+                  "Omnichannel POS solution synchronizing real-time inventory with Shopify, supporting payments and invoice printing.",
+                technologies: "ReactJS, NodeJS, PostgreSQL, Redis",
                 participation: [
-                  "Phát triển backend, frontend cho hệ thống POS Shopify.",
-                  "Triển khai background jobs và cron để đồng bộ dữ liệu giữa POS và Shopify.",
-                  "Xây dựng webhook handlers để xử lý events từ Shopify, PayPal.",
-                  "Tích hợp cổng thanh toán PayPal, quản lý luồng subscription và thanh toán định kỳ.",
+                  "**Data Synchronization:** Implemented Background Jobs/Cron and handled Webhooks from Shopify/PayPal to ensure real-time inventory consistency.",
+                  "**Payments & Billing:** Integrated PayPal gateway and built an automated subscription management workflow for end-users.",
                 ],
               },
             ],
@@ -286,171 +278,183 @@
         ],
         education: [
           {
-            school: "Đại học Công nghệ - ĐHQGHN",
+            school: "VNU University of Engineering and Technology (UET)",
             date: "10/2020 - 10/2024",
-            degree: "Chuyên ngành: Công nghệ thông tin",
-            details: ["Xếp loại: Giỏi - GPA: 3.31 / 4.0"],
+            degree: "Major: Information Technology",
+            details: ["Classification: Very Good - GPA: 3.31 / 4.0"],
           },
         ],
         additionalInfo: [
           {
-            title: "Kỹ năng",
+            title: "Technical Skills",
             detail:
-              "NestJS, Elasticsearch, Redis, MongoDB, PostgreSQL, BullMQ, RabbitMQ, ReactJS, NextJS, Shadcn, TailwindCSS.",
+              "NodeJS, NestJS, Elasticsearch, Redis, MongoDB, PostgreSQL, BullMQ, RabbitMQ, ReactJS, NextJS, TailwindCSS",
+          },
+          {
+            title: "Certifications",
+            detail: "B1 VSTEP (English Proficiency)",
           },
         ],
       };
-
       // ------------------------------------------------------------------
-      // ----- LOGIC RENDER (Đã được cập nhật) -----
+      // 2. LOGIC RENDER
       // ------------------------------------------------------------------
 
-      function createListItems(detailsArray) {
-        if (!detailsArray || detailsArray.length === 0) return "";
-        return detailsArray.map((item) => `<li>${item}</li>`).join("");
+      // Helper: Format **text** thành đậm
+      function formatText(str) {
+        if (!str) return "";
+        return str.replace(
+          /\*\*([^*]+)\*\*/g,
+          '<strong class="font-semibold text-gray-900">$1</strong>'
+        );
       }
 
+      // 1. Render Header
       function renderHeader(data) {
         document.getElementById("resume-name").textContent = data.name;
         document.getElementById("resume-avatar").src = data.avatar;
 
-        const contactGrid = document.getElementById("contact-info-grid");
-        contactGrid.innerHTML = `
-                <div class="flex items-center justify-center md:justify-start">
-                    <svg class="w-4 h-4 text-gray-500 mr-2 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
-                    </svg>
-                    <span>${data.dob}</span>
-                </div>
-                <div class="flex items-center justify-center md:justify-start">
-                    <svg class="w-4 h-4 text-gray-500 mr-2 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" /></svg>
-                    <span>${data.email}</span>
-                </div>
-                <div class="flex items-center justify-center md:justify-start">
-                    <svg class="w-4 h-4 text-gray-500 mr-2 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" /></svg>
-                    <span>${data.address}</span>
-                </div>
+        const items = [
+          {
+            icon: `<path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />`,
+            text: data.dob,
+          },
+          {
+            icon: `<path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />`,
+            text: data.email,
+          },
+          {
+            icon: `<path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.21-1.006-.566-1.368l-1.988-1.988a2.25 2.25 0 0 0-3.182 0l-1.17 1.17a.75.75 0 0 1-1.06 0l-5.69-5.69a.75.75 0 0 1 0-1.06l1.17-1.17a2.25 2.25 0 0 0 0-3.182L5.684 3.316a2.25 2.25 0 0 0-1.368-.566H2.25A2.25 2.25 0 0 0 0 5.25v1.5Z" />`,
+            text: data.phone,
+          },
+          {
+            icon: `<path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />`,
+            text: data.address,
+          },
+        ];
 
-                <div class="flex items-center justify-center md:justify-start">
-                    <svg class="w-4 h-4 text-gray-500 mr-2 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.21-1.006-.566-1.368l-1.988-1.988a2.25 2.25 0 0 0-3.182 0l-1.17 1.17a.75.75 0 0 1-1.06 0l-5.69-5.69a.75.75 0 0 1 0-1.06l1.17-1.17a2.25 2.25 0 0 0 0-3.182L5.684 3.316a2.25 2.25 0 0 0-1.368-.566H2.25A2.25 2.25 0 0 0 0 5.25v1.5Z" /></svg>
-                    <span>${data.phone}</span>
-                </div>
-                <div class="flex items-center justify-center md:justify-start">
-
-                </div>
-            `;
+        document.getElementById("contact-info-grid").innerHTML = items
+          .map(
+            (item) => `
+            <div class="flex items-center">
+                <svg class="w-4 h-4 text-main-blue flex-shrink-0 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">${item.icon}</svg>
+                <span>${item.text}</span>
+            </div>
+        `
+          )
+          .join("");
       }
 
-      function renderSummary(summary) {
-        document.getElementById("summary-content").textContent = summary;
+      // 2. Render Summary
+      function renderSummary(text) {
+        document.getElementById("summary-content").textContent = text;
       }
 
-      /**
-       * ===============================================
-       * ===== HÀM ĐÃ ĐƯỢC CẬP NHẬT (Fix ngắt trang) =====
-       * ===============================================
-       */
+      // 3. Render Work Experience (MỚI)
       function renderWorkExperience(experienceArray) {
         const container = document.getElementById("work-experience-container");
         container.innerHTML = experienceArray
           .map((job) => {
             const projectsHtml = job.projects
-              .map((project) => {
-                const participationListHtml =
-                  project.participation && project.participation.length > 0
-                    ? `
-                        <p class="text-gray-700 mt-2"> <span class="font-medium text-gray-800">Tham gia:</span>
-                        </p>
-                        <ul class="list-custom text-gray-700 mt-1">
-                          ${createListItems(project.participation)}
-                        </ul>`
-                    : "";
+              .map((project, idx) => {
+                // Tạo list các task
+                const tasksHtml = project.participation
+                  .map(
+                    (task) => `
+                    <li>${formatText(task)}</li>
+                `
+                  )
+                  .join("");
 
                 return `
-                  <div class="mt-3 project-item">
-                    <h4 class="font-semibold text-gray-800">${project.name}</h4>
-
-                    <div class="pl-4">
-                        ${
-                          project.description
-                            ? `
-                            <p class="text-gray-700 mt-2">
-                              <span class="font-medium text-gray-800">Mô tả:</span> ${project.description}
-                            </p>`
-                            : ""
-                        }
-
-                        ${
-                          project.technologies
-                            ? `
-                            <p class="text-gray-700 mt-1">
-                              <span class="font-medium text-gray-800">Công nghệ:</span> ${project.technologies}
-                            </p>`
-                            : ""
-                        }
-
-                        ${participationListHtml}
+                  <div class="mt-3 ${
+                    idx > 0 ? "border-t border-dashed border-gray-200 pt-4" : ""
+                  } project-item">
+                    <h4 class="font-bold text-gray-800 text-md mb-2 flex items-center">
+                        <span class="w-2 h-2 bg-main-blue rounded-full"></span>
+                        ${project.name}
+                    </h4>
+                    
+                    <div class="ml-2  text-gray-700">
+                        <ul class="list-custom mt-2">
+                          <li>
+                              <span class="project-label">Overview:</span>
+                              <span class="">${project.description}</span>
+                          </li>
+                          <li>
+                            <span class="project-label">Tech stack:</span>
+                            <span class="flex-1">${formatText(
+                              project.technologies
+                            )}</span>
+                          </li>
+                        
+                           ${tasksHtml} 
+                        </ul>
                     </div>
                   </div>
                 `;
               })
               .join("");
 
-            // HTML cho MỘT công việc
             return `
-              <div class="mb-6">
-                <div class="job-header work-item flex justify-between items-baseline mb-1 flex-wrap">
-                  <h3 class="text-lg font-semibold text-gray-900">${job.jobTitle}, ${job.company}</h3>
-                  <span class="text-sm font-medium text-gray-600 whitespace-nowrap ml-2">${job.date}</span>
+              <div class="mb-6 last:mb-0">
+                <div class="job-header flex justify-between items-center mb-1 bg-main-blue-light px-3 py-1.5 rounded border-l-4 border-main-blue">
+                  <h3 class="text-base font-bold text-gray-900 uppercase">${job.jobTitle} - ${job.company}</h3>
+                  <span class=" font-semibold text-main-blue whitespace-nowrap">${job.date}</span>
                 </div>
-
-                <div class="">
+                <div class="pl-2">
                     ${projectsHtml}
                 </div>
-
               </div>
             `;
           })
           .join("");
       }
 
+      // 4. Render Education
       function renderEducation(educationArray) {
-        const container = document.getElementById("education-container");
-        container.innerHTML = educationArray
-          .map(
-            (edu) => `
-                <div class="mb-4 education-item">
-                    <div class="flex justify-between items-baseline mb-1 flex-wrap">
-                        <h3 class="text-lg font-semibold text-gray-900">${
-                          edu.school
-                        }</h3>
-                        <span class="text-sm font-medium text-gray-600 whitespace-nowrap ml-2">${
-                          edu.date
-                        }</span>
-                    </div>
-                    <p class="text-gray-700 mb-1">${edu.degree}</p>
-                    <ul class="list-custom text-gray-700">
-                        ${createListItems(edu.details)}
-                    </ul>
+        document.getElementById("education-container").innerHTML =
+          educationArray
+            .map(
+              (edu) => `
+            <div class="mb-3 education-item">
+                <div class="flex justify-between items-baseline mb-1">
+                    <h3 class="font-bold text-gray-900 text-base">${
+                      edu.school
+                    }</h3>
+                    <span class=" font-semibold text-gray-600">${
+                      edu.date
+                    }</span>
                 </div>
-            `
-          )
-          .join("");
+                <p class="text-gray-700  font-medium">${edu.degree}</p>
+                <ul class="list-custom  text-gray-600 mt-1">
+                    ${edu.details.map((d) => `<li>${d}</li>`).join("")}
+                </ul>
+            </div>
+        `
+            )
+            .join("");
       }
 
+      // 5. Render Skills (Additional Info)
       function renderAdditionalInfo(infoArray) {
-        const container = document.getElementById("additional-info-container");
-        container.innerHTML = infoArray
-          .map(
-            (info) => `
-                <li>
-                    <strong class="text-gray-800">${info.title}:</strong> ${info.detail}
-                </li>
-            `
-          )
-          .join("");
+        document.getElementById("additional-info-container").innerHTML =
+          infoArray
+            .map(
+              (info) => `
+            <li>
+                <strong class="text-gray-900 font-semibold inline-block">${
+                  info.title
+                }:</strong>
+                <span>${formatText(info.detail)}</span>
+            </li>
+            
+        `
+            )
+            .join("");
       }
 
+      // Main Execution
       document.addEventListener("DOMContentLoaded", () => {
         try {
           renderHeader(resumeData.personalInfo);
@@ -459,9 +463,7 @@
           renderEducation(resumeData.education);
           renderAdditionalInfo(resumeData.additionalInfo);
         } catch (error) {
-          console.error("Lỗi khi render resume:", error);
-          document.body.innerHTML =
-            "<h1 class='text-red-500 text-center p-10'>Lỗi khi tải dữ liệu resume. Vui lòng kiểm tra cấu trúc dữ liệu trong 'resumeData'.</h1>";
+          console.error("Lỗi render:", error);
         }
       });
     </script>
